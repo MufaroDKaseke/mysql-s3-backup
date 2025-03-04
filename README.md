@@ -36,7 +36,7 @@ Before using this script, ensure:
 
 4.  **Edit the script** and set your S3 bucket name:  
     ```batch
-    set s3_bucket=s3://<your-buck-name>/mysql-backups/
+    set s3_bucket=s3://<your-bucket-name>/mysql-backups/
     ```
 
 5.  **Run the script**:  
@@ -55,7 +55,9 @@ Before using this script, ensure:
     aws s3 ls s3://<your-bucket-name>/mysql-backups/
     ```
 
-    You should see your backup file listed with today's timestamp.
+    **Or just check the bucket in AWS Console**:
+    ![S3 Bucket](images/bucket_screenshot.png)
+    You should see your backup files listed with today's timestamp.
 
 
 Let me know if you need further modifications! 🚀
