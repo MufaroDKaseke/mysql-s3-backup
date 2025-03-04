@@ -5,7 +5,7 @@ set mysql_bin=C:\xampp\mysql\bin
 set date_stamp=%DATE:~10,4%%DATE:~4,2%%DATE:~7,2%_%TIME:~0,2%%TIME:~3,2%%TIME:~6,2%
 set filename=backup_%date_stamp%.sql
 set full_path=%backup_path%\%filename%
-set s3_bucket=s3://momo-db-backups/mysql-backups/
+set s3_bucket=s3://<your-bucket-name>/mysql-backups/
 
 :: Variables for MySQL check
 setlocal enabledelayedexpansion
@@ -50,3 +50,15 @@ if not exist "%backup_path%" (
 echo Backing up MySQL databases...
 "%mysql_bin%\mysqldump" -u root --single-transaction --all-databases > "%full_path%"
 echo Backup completed: %full_path%
+
+:: Upload Backup to AWS S3
+echo Uploading backup to AWS S3...
+aws s3 cp "%full_path%" "%s3_bucket%"
+if %errorlevel% neq 0 (
+    echo S3 upload failed!
+    exit /b 1
+)
+
+:: Display complete message and exit
+echo Backup completed successfully!
+exit /b 0
