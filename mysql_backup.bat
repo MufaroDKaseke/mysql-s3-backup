@@ -59,6 +59,9 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
+:: Delete old backups
+forfiles /p "%backup_path%" /s /m *.sql /d -7 /c "cmd /c del @file"
+
 :: Display complete message and exit
 echo Backup completed successfully!
 exit /b 0
